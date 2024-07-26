@@ -27,18 +27,9 @@ public class TurretController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		// get mouse position and move barrel
-
-
-		//barrelController.RotateBarrelTo(zombieT);
-
 		// check if enough time has passed to shoot again
 		if (shootTimer <= 0f)
 		{
-			//Shoot();
-			//onCooldown = true;
-			//shootTimer = shootCooldown;
-
 			onCooldown = false;
 			shootTimer = shootCooldown; // reset the timer
 		}
@@ -47,9 +38,17 @@ public class TurretController : MonoBehaviour
 		{
 			shootTimer -= Time.deltaTime;
 		}
-		else if (PlayerShoot())
+		else 
 		{
-			onCooldown = true;
+			if (gameManager.IsSimulating())
+			{
+				Shoot();
+				onCooldown = true;
+			}
+			else
+			{
+				onCooldown = PlayerShoot();
+			}
 		}
 
 		gameManager.UpdateCooldownUI(shootTimer * 2);

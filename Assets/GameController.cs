@@ -9,15 +9,20 @@ public class GameController : MonoBehaviour
 	public TMP_Text _winCount;
 	public TMP_Text _loseCount;
 	public Image cooldownBarImg;
+	public Button simulateButton;
+	public Button playButton;
 
 	private int winCount = 0;
 	private int loseCount = 0;
+	private bool isSimulating = false;
 
 	// Start is called before the first frame update
 	void Start()
 	{
 		_winCount.text = "Zombie Win: " + winCount;
 		_loseCount.text = "Player Win: " + loseCount;
+
+		SwitchToSimulate();
 	}
 
 	// Update is called once per frame
@@ -44,4 +49,24 @@ public class GameController : MonoBehaviour
 			cooldownBarImg.fillAmount = fillAmount;
 		}
 	}
+
+	public bool IsSimulating()
+	{
+		return isSimulating;
+	}
+
+	public void SwitchToSimulate()
+	{
+		simulateButton.interactable = false;
+		playButton.interactable = true;
+		isSimulating = true;
+	}
+
+	public void SwitchToPlay()
+	{
+		simulateButton.interactable = true;
+		playButton.interactable = false;
+		isSimulating = false;
+	}
+
 }
