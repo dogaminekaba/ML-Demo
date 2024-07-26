@@ -3,30 +3,36 @@ using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
 using static UnityEngine.GraphicsBuffer;
+using UnityEditor.Animations;
 
 public class AgentController : Agent
 {
     public GameObject target;
-    public float forceMultiplier = 0.1f;
+    public float speedMultiplier;
     public GameController gameManager;
 
     private Rigidbody rBody;
-    private EnemyController targetController;
+    private TurretController targetController;
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
         rBody = GetComponent<Rigidbody>();
-        targetController = target.GetComponent<EnemyController>();
+        targetController = target.GetComponent<TurretController>();
+        animator = GetComponent<Animator>();
     }
     public override void OnEpisodeBegin()
     {
+        animator.SetFloat("MoveSpeed", 1);
+        animator.SetBool("Attack", true);
+
         // If the Agent fell, zero its momentum
         if (this.transform.localPosition.y < 0)
         {
             this.rBody.angularVelocity = Vector3.zero;
             this.rBody.velocity = Vector3.zero;
-            this.transform.localPosition = new Vector3(0, 0.25f, 0);
+            this.transform.localPosition = new Vector3(0, 0, 0);
         }
 
         // Move the target to a new spot
@@ -50,8 +56,14 @@ public class AgentController : Agent
         Vector3 controlSignal = Vector3.zero;
         controlSignal.x = actionBuffers.ContinuousActions[0];
         controlSignal.z = actionBuffers.ContinuousActions[1];
-        //rBody.AddForce(controlSignal * forceMultiplier);
-        transform.position += controlSignal * forceMultiplier;
+
+        transform.position += controlSignal * speedMultiplier;
+
+        Vector3 targetPostition = new Vector3(target.transform.position.x,
+                                              transform.position.y,
+                                              target.transform.position.z);
+
+        transform.LookAt(targetPostition);
 
         // Fell off platform
         if (this.transform.localPosition.y < 0)
