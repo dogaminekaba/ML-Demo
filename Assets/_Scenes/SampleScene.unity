@@ -1373,7 +1373,7 @@ GameObject:
   - component: {fileID: 1980040178}
   - component: {fileID: 1980040177}
   m_Layer: 5
-  m_Name: WinCount
+  m_Name: ZombieScore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1419,7 +1419,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Zombie Win:'
+  m_text: 'Zombie Score:'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1508,7 +1508,7 @@ GameObject:
   - component: {fileID: 2062384465}
   - component: {fileID: 2062384464}
   m_Layer: 5
-  m_Name: LoseCount
+  m_Name: PlayerScore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1554,7 +1554,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Player Win:
+  m_text: 'Player Score:
 
 '
   m_isRightToLeft: 0
@@ -1724,7 +1724,7 @@ PrefabInstance:
     - target: {fileID: 7280371975688087854, guid: 98535578212b80d4685620ab69973f52, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: 0ef13e97782551945a9e24fdf7ccb2d2, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: 0bb4ffaf2a5f84b4f8f2e62b06604420, type: 3}
     - target: {fileID: 7280371975688087855, guid: 98535578212b80d4685620ab69973f52, type: 3}
       propertyPath: target
       value: 
@@ -1739,7 +1739,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7280371975688087855, guid: 98535578212b80d4685620ab69973f52, type: 3}
       propertyPath: speedMultiplier
-      value: 0.05
+      value: 0.07
       objectReference: {fileID: 0}
     - target: {fileID: 8098558922968300322, guid: 98535578212b80d4685620ab69973f52, type: 3}
       propertyPath: m_RootOrder

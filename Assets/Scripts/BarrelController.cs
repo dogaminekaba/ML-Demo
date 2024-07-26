@@ -17,13 +17,7 @@ public class BarrelController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Vector3 targetPostition = new Vector3(zombie.transform.position.x, 
-        //                                      transform.position.y, 
-        //                                      zombie.transform.position.z);
-
-        //transform.LookAt(targetPostition);
-
-        //Debug.DrawLine(targetPostition, transform.position, Color.red);
+        
     }
 
     public void RotateBarrelTo (Vector3 targetPoint)

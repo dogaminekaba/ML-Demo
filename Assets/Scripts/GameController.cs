@@ -19,8 +19,8 @@ public class GameController : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		_winCount.text = "Zombie Win: " + winCount;
-		_loseCount.text = "Player Win: " + loseCount;
+		_winCount.text = "Zombie Score: " + winCount;
+		_loseCount.text = "Player Score: " + loseCount;
 
 		SwitchToSimulate();
 	}
@@ -28,8 +28,8 @@ public class GameController : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		_winCount.text = "Zombie Win: " + winCount;
-		_loseCount.text = "Player Win: " + loseCount;
+		_winCount.text = "Zombie Score: " + winCount;
+		_loseCount.text = "Player Score: " + loseCount;
 	}
 
 	public void IncreaseWinCount()

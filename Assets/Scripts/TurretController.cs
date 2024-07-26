@@ -51,6 +51,15 @@ public class TurretController : MonoBehaviour
 			}
 		}
 
+		if (gameManager.IsSimulating())
+		{
+			Vector3 targetPosition = new Vector3(zombie.transform.position.x,
+												  0,
+												  zombie.transform.position.z);
+
+			barrelController.RotateBarrelTo(targetPosition);
+		}
+
 		gameManager.UpdateCooldownUI(shootTimer * 2);
 	}
 
