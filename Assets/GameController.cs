@@ -2,36 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
-    public TMP_Text _winCount;
-    public TMP_Text _loseCount;
+	public TMP_Text _winCount;
+	public TMP_Text _loseCount;
+	public Image cooldownBarImg;
 
-    private int winCount = 0;
-    private int loseCount = 0;
+	private int winCount = 0;
+	private int loseCount = 0;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        _winCount.text = "Win: " + winCount;
-        _loseCount.text = "Lose: " + loseCount;
-    }
+	// Start is called before the first frame update
+	void Start()
+	{
+		_winCount.text = "Zombie Win: " + winCount;
+		_loseCount.text = "Player Win: " + loseCount;
+	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        _winCount.text = "Win: " + winCount;
-        _loseCount.text = "Lose: " + loseCount;
-    }
+	// Update is called once per frame
+	void Update()
+	{
+		_winCount.text = "Zombie Win: " + winCount;
+		_loseCount.text = "Player Win: " + loseCount;
+	}
 
-    public void IncreaseWinCount()
-    {
-        ++winCount;
-    }
+	public void IncreaseWinCount()
+	{
+		++winCount;
+	}
 
-    public void IncreaseLoseCount()
-    {
-        ++loseCount;
-    }
+	public void IncreaseLoseCount()
+	{
+		++loseCount;
+	}
+
+	public void UpdateCooldownUI(float fillAmount)
+	{
+		if (cooldownBarImg != null)
+		{
+			cooldownBarImg.fillAmount = fillAmount;
+		}
+	}
 }
