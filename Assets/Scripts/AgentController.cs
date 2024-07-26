@@ -2,8 +2,6 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
-using static UnityEngine.GraphicsBuffer;
-using UnityEditor.Animations;
 
 public class AgentController : Agent
 {
@@ -28,11 +26,11 @@ public class AgentController : Agent
         animator.SetBool("Attack", true);
 
         // If the Agent fell, zero its momentum
-        if (this.transform.localPosition.y < 0)
+        if (transform.localPosition.y < 0)
         {
-            this.rBody.angularVelocity = Vector3.zero;
-            this.rBody.velocity = Vector3.zero;
-            this.transform.localPosition = new Vector3(0, 0, 0);
+            rBody.angularVelocity = Vector3.zero;
+            rBody.velocity = Vector3.zero;
+            transform.localPosition = new Vector3(0, 0, 0);
         }
 
         // Move the target to a new spot
@@ -43,7 +41,7 @@ public class AgentController : Agent
     {
         // Target and Agent positions
         sensor.AddObservation(target.transform.localPosition);
-        sensor.AddObservation(this.transform.localPosition);
+        sensor.AddObservation(transform.localPosition);
 
         // Agent velocity
         sensor.AddObservation(rBody.velocity.x);
@@ -66,7 +64,7 @@ public class AgentController : Agent
         transform.LookAt(targetPostition);
 
         // Fell off platform
-        if (this.transform.localPosition.y < 0)
+        if (transform.localPosition.y < 0)
         {
             SetReward(0.0f);
             EndEpisode();

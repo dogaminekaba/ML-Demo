@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -38,26 +37,14 @@ public class TurretController : MonoBehaviour
 		{
 			shootTimer -= Time.deltaTime;
 		}
-		else 
-		{
-			if (gameManager.IsSimulating())
-			{
-				Shoot();
-				onCooldown = true;
-			}
-			else
-			{
-				onCooldown = PlayerShoot();
-			}
-		}
 
 		if (gameManager.IsSimulating())
 		{
-			Vector3 targetPosition = new Vector3(zombie.transform.position.x,
-												  0,
-												  zombie.transform.position.z);
-
-			barrelController.RotateBarrelTo(targetPosition);
+			TryShoot();
+		}
+		else
+		{
+			CheckPlayerShoot();
 		}
 
 		gameManager.UpdateCooldownUI(shootTimer * 2);
@@ -74,38 +61,54 @@ public class TurretController : MonoBehaviour
 	}
 
 	// Auto-shoot
-	void Shoot()
+	void TryShoot()
 	{
-		Transform zombieT = zombie.transform;
-		Vector3 direction = (zombieT.position - transform.position).normalized;
+		// update barrel rotation
+		Vector3 targetPosition = new Vector3(	zombie.transform.position.x,
+												barrelController.transform.position.y,
+												zombie.transform.position.z);
+		barrelController.RotateBarrelTo(targetPosition);
 
-		GameObject bullet = Instantiate(bulletPref, transform.position, zombieT.rotation);
-		bulletList.Add(bullet);
-		Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
+		// shoot
+		if (!onCooldown)
+		{
+			Transform zombieT = zombie.transform;
+			Vector3 direction = (zombieT.position - transform.position).normalized;
 
-		if (bulletRigidbody != null)
-		{
-			bulletRigidbody.velocity = direction * bulletSpeed;
-		}
-		else
-		{
-			Debug.LogError("Bullet prefab does not have a Rigidbody component!");
+			GameObject bullet = Instantiate(bulletPref, transform.position, zombieT.rotation);
+			bulletList.Add(bullet);
+			Rigidbody bulletRigidbody = bullet.GetComponent<Rigidbody>();
+
+			if (bulletRigidbody != null)
+			{
+				bulletRigidbody.velocity = direction * bulletSpeed;
+				onCooldown = true;
+			}
+			else
+			{
+				Debug.LogError("Bullet prefab does not have a Rigidbody component!");
+			}
+
+			
 		}
 
 	}
 
-	bool PlayerShoot()
+	void CheckPlayerShoot()
 	{
 		RaycastHit _hit;
 		Ray _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
 		if (Physics.Raycast(_ray, out _hit))
 		{
-			Vector3 targetPoint = new Vector3(_hit.point.x, barrelController.transform.position.y, _hit.point.z);
+			// update barrel rotation
+			Vector3 targetPoint = new Vector3(	_hit.point.x, 
+												barrelController.transform.position.y, 
+												_hit.point.z);
 			barrelController.RotateBarrelTo(targetPoint);
 
 			// shoot when left click is pressed
-			if (Input.GetMouseButtonDown(0))
+			if (!onCooldown && Input.GetMouseButtonDown(0))
 			{
 				Vector3 direction = (targetPoint - transform.position).normalized;
 				GameObject bullet = Instantiate(bulletPref, transform.position, transform.rotation);
@@ -116,7 +119,7 @@ public class TurretController : MonoBehaviour
 					bulletRigidbody.velocity = direction * bulletSpeed;
 					bulletList.Add(bullet);
 
-					return true;
+					onCooldown = true;
 				}
 				else
 				{
@@ -126,7 +129,5 @@ public class TurretController : MonoBehaviour
 
 			}
 		}
-
-		return false;
 	}
 }
